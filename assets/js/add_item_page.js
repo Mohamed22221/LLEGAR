@@ -61,6 +61,7 @@ shareBtn.addEventListener("click", async () => {
       url: "/items",
       method: "POST",
       data: body,
+      navigate: "/",
     });
     spinner.style.display = "none";
   } catch (err) {

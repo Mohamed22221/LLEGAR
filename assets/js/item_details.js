@@ -5,11 +5,11 @@ import { request } from "./service/index.mjs";
 let spinner = document.querySelector(".spinner__container");
 let othersBtn = document.getElementById("seeHisPage");
 
-othersBtn.addEventListener("click", () => {
-  setTimeout(() => {
-    window.location.href = "others_person_page.html";
-  }, 100);
-});
+// othersBtn.addEventListener("click", () => {
+//   setTimeout(() => {
+//     window.location.href = "others_person_page.html";
+//   }, 100);
+// });
 
 // === Move to payment page ===
 
@@ -17,23 +17,23 @@ let purchaseBtn = document.querySelector(
   "#itemDetails .container .time-and-bell .bell .purchase-btn .button"
 );
 
-purchaseBtn.addEventListener("click", () => {
-  setTimeout(() => {
-    window.location.href = "payment_page.html";
-  }, 100);
-});
+// purchaseBtn.addEventListener("click", () => {
+//   setTimeout(() => {
+//     window.location.href = "payment_page.html";
+//   }, 100);
+// });
 
 // Condition Checkbox
 
 const conditionCheckbox = document.getElementById("condition");
 
-conditionCheckbox.addEventListener("change", () => {
-  if (conditionCheckbox.checked) {
-    conditionCheckbox.setAttribute("checked", "checked");
-  } else {
-    conditionCheckbox.removeAttribute("checked");
-  }
-});
+// conditionCheckbox.addEventListener("change", () => {
+//   if (conditionCheckbox.checked) {
+//     conditionCheckbox.setAttribute("checked", "checked");
+//   } else {
+//     conditionCheckbox.removeAttribute("checked");
+//   }
+// });
 
 //======================= End Showing Details =======================
 
@@ -42,21 +42,164 @@ conditionCheckbox.addEventListener("change", () => {
 let loadMoreBtn = document.querySelector("#loadMore");
 let currentItem = 3;
 
-loadMoreBtn.onclick = () => {
-  let boxes = [
-    ...document.querySelectorAll("#itemDetails .container .box-container .box"),
-  ];
-  for (let i = currentItem; i < currentItem + 4; i++) {
-    boxes[i].style.display = "inline-block";
-  }
-  currentItem += 3;
-  if (currentItem >= boxes.length) {
-    loadMoreBtn.style.display = "none";
-    loadMoreBtn.style.backgroundColor = "var(--main-color)";
-  }
-};
+// loadMoreBtn.onclick = () => {
+//   let boxes = [
+//     ...document.querySelectorAll("#itemDetails .container .box-container .box"),
+//   ];
+//   for (let i = currentItem; i < currentItem + 4; i++) {
+//     boxes[i].style.display = "inline-block";
+//   }
+//   currentItem += 3;
+//   if (currentItem >= boxes.length) {
+//     loadMoreBtn.style.display = "none";
+//     loadMoreBtn.style.backgroundColor = "var(--main-color)";
+//   }
+// };
 
-//======================= End Show More Photos =======================
+//=======================  Show details items =======================
+let itemContainer = document.querySelector(
+  "#itemDetails .container .details-item"
+);
+function generateItem(id = "64a74370e67c6d0054a98bf7") {
+  (async function getReviewsOnItem() {
+    try {
+      spinner.style.display = "flex";
+      const response = await request({
+        url: `/items/${id}`,
+      });
+      spinner.style.display = "none";
+      console.log(response, "response");
+      let item = response?.data?.doc;
+
+      let itemUI = `
+        <div class="owner-container">
+        <div class="owner">
+          <div class="info">
+            <img src="assets/imgs//Person/Ahmed-Salem.jpg" alt="">
+            <div class="name-and-date">
+              <div class="name">${item.Owner.userName}</div>
+              <div class="date"><span class="num">2</span> <span>Days ago</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="owner-btn">
+          <button id="seeHisPage" type="button">See His Page</button>
+          <button onclick="ShowUserReviewPopUp()" id="LeaveYourReview" type="button">Leave Your Review</button>
+        </div>
+      </div>
+      <div id="itemTitle" class="container">
+        <div id="itemTitleDetails" class="main-title">
+          <div class="text-header">
+            <h2 class="title top">${item.title}</h2>
+            <div class="mid">${item.city}</span>, <span class="location">${
+        item.location.address
+      }</span></div>
+            <div class="footer"><span class="star"><i class="fa-solid fa-star"></i></span> <span class="rate">4.0</span> (<span class="reviews">0</span> Reviews) <span class="available">${
+              item.availablity === true ? "Available" : "Not Available"
+            }</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="box-container">
+          <div class="box">
+            <div class="image">
+              <img src="assets/imgs/Card_Images/house.jpg" alt="">
+            </div>
+          </div>
+          <div class="box">
+            <div class="image">
+              <img src="assets/imgs/Card_Images/House/deborah-cortelazzi-gREquCUXQLI-unsplash.jpg" alt="">
+            </div>
+          </div>
+          <div class="box">
+            <div class="image">
+              <img src="assets/imgs/Card_Images/House/andrea-davis-IWfe63thJxk-unsplash.jpg" alt="">
+            </div>
+          </div>
+          <div class="box">
+            <div class="image">
+              <img src="assets/imgs/Card_Images/House/collov-home-design-KvGG0paOhOA-unsplash.jpg" alt="">
+            </div>
+          </div>
+          <div class="box">
+            <div class="image">
+              <img src="assets/imgs/Card_Images/House/francesca-tosolini-tHkJAMcO3QE-unsplash.jpg" alt="">
+            </div>
+          </div>
+          
+        </div>
+        <div id="loadMore">Show All</div>
+      </div>
+
+      <div id="discription" class="container">
+        <div id="descTitle" class="main-title">
+          <h1>Description</h1>
+        </div>
+        <p>${item.description}</p>
+      </div>
+      <div class="condition">
+        <input id="condition" type="checkbox">
+        <label for="condition">The client agrees to maintain the property in its original condition and to take reasonable care of it during the rental period. Any malicious or intentional damage to the property will result in additional charges. These charges include, but are not limited to, the cost of repairs or replacement of damaged items, legal fees, and insurance.</label>
+      </div>
+      <div id="location" class="container">
+        <div id="descTitle" class="main-title">
+          <h1>Location</h1>
+        </div>
+        <div class="location-field">
+        ${item.city}
+        </div>
+      </div>
+      <div id="descTitle" class="main-title">
+        <h1>Shipping</h1>
+      </div>
+      <div class="location-box">
+        <div class="loc-icon">
+          <i class="fa-solid fa-location-dot"></i>
+        </div>
+        <div class="mid">
+          <div>
+            <h3>Home</h3>
+          </div>
+          <p>${item.location.address}</p>
+        </div>
+      </div>
+      <div class="time-and-bell">
+      <div class="time">
+        <div id="StartTime">
+            <label for="start">Choose: Start Time</label>
+            <input id="start" class="start" type="date">
+        </div>
+        <div id="endTime">
+          <label for="end">Choose: End Time</label>
+          <input id="end" class="end" type="date">
+        </div>
+      </div>
+      <div class="bell">
+        <div class="amount">Amount <span class="amount-price"><span class="dollar-sign">$</span><span class="price">120</span></span></div>
+        <div class="commission">Commission <span class="commission-price"><span class="dollar-sign">$</span><span class="price">10</span></span></div>
+        <div class="insurance">Insurance <span class="insurance-price"><span class="dollar-sign">$</span><span class="price">65</span></span></div>
+        <div class="shipping">Shipping <span class="shipping-price"><span class="dollar-sign">$</span><span class="price">-</span></span></div>
+        <div class="total-container">
+          <div class="total">Total <span class="total-price"><span class="dollar-sign">$</span><span class="price">195</span></span></div>
+        </div>
+        <div class="purchase-btn"><div class="button purchase"><i class="fa-solid fa-fire"></i>Purchase<i class="fa-solid fa-fire"></i></div></div>
+      </div>
+    </div>
+      </div>
+        `;
+      if (response.status === "success") {
+        itemContainer.innerHTML = itemUI;
+      } else {
+        itemContainer.innerHTML = `<span>${response.data.message}</span>`;
+      }
+    } catch (err) {
+      itemContainer.innerHTML = `<span>${err.message}</span>`;
+    }
+  })();
+}
+
+generateItem(localStorage.getItem("itemID"));
 
 //======================= Start Generation of Items Reviews Section =======================
 
@@ -65,7 +208,7 @@ let itemsReviewContainer = document.querySelector(
 );
 
 function generateItemsReview(id = "64a74370e67c6d0054a98bf7") {
-  (async function getReviewsOnItem() {
+  (async function getOnItem() {
     try {
       spinner.style.display = "flex";
       const response = await request({

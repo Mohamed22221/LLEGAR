@@ -58,7 +58,7 @@ paymentForm.addEventListener("submit", (event) => {
     try {
       spinner.style.display = "flex";
       const booking = await request({
-        url: `/items/${id}/bookings`,
+        url: `/items/${localStorage.getItem("itemID") || id}/bookings`,
         method: "POST",
         data: body,
         navigate: "/",
