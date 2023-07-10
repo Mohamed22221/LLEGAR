@@ -16,12 +16,14 @@ let othersBtn = document.getElementById("seeHisPage");
 let purchaseBtn = document.querySelector(
   "#itemDetails .container .time-and-bell .bell .purchase-btn .button"
 );
-
-// purchaseBtn.addEventListener("click", () => {
-//   setTimeout(() => {
-//     window.location.href = "payment_page.html";
-//   }, 100);
-// });
+// let handelPurchaseBtn = () =>{
+//    window.location.href = "payment_page.html";
+// }
+purchaseBtn.addEventListener("click", () => {
+  setTimeout(() => {
+    window.location.href = "payment_page.html";
+  }, 100);
+});
 
 // Condition Checkbox
 
@@ -164,27 +166,7 @@ function generateItem(id = "64a74370e67c6d0054a98bf7") {
           <p>${item.location.address}</p>
         </div>
       </div>
-      <div class="time-and-bell">
-      <div class="time">
-        <div id="StartTime">
-            <label for="start">Choose: Start Time</label>
-            <input id="start" class="start" type="date">
-        </div>
-        <div id="endTime">
-          <label for="end">Choose: End Time</label>
-          <input id="end" class="end" type="date">
-        </div>
-      </div>
-      <div class="bell">
-        <div class="amount">Amount <span class="amount-price"><span class="dollar-sign">$</span><span class="price">120</span></span></div>
-        <div class="commission">Commission <span class="commission-price"><span class="dollar-sign">$</span><span class="price">10</span></span></div>
-        <div class="insurance">Insurance <span class="insurance-price"><span class="dollar-sign">$</span><span class="price">65</span></span></div>
-        <div class="shipping">Shipping <span class="shipping-price"><span class="dollar-sign">$</span><span class="price">-</span></span></div>
-        <div class="total-container">
-          <div class="total">Total <span class="total-price"><span class="dollar-sign">$</span><span class="price">195</span></span></div>
-        </div>
-        <div class="purchase-btn"><div class="button purchase"><i class="fa-solid fa-fire"></i>Purchase<i class="fa-solid fa-fire"></i></div></div>
-      </div>
+      
     </div>
       </div>
         `;

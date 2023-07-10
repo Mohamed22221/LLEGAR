@@ -71,6 +71,7 @@ submitVerification.addEventListener("click", function (e) {
     .then((result) => {
       
       if (result.status === "success") {
+        localStorage.setItem("JWT", result.token);
         window.location = "new_pass.html";
       } else {
         alert(result.message);
